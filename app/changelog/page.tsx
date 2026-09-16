@@ -628,7 +628,7 @@ export default function ChangelogPage() {
                   Commits récents
                 </CardTitle>
                 <CardDescription className="text-muted-foreground">
-                  Les dernières modifications du code source
+                  Les dernières modifications du code source du plugin
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -751,7 +751,7 @@ export default function ChangelogPage() {
           <Card className="bg-card/30 border-border backdrop-blur-sm">
             <CardContent className="pt-6">
               <p className="text-muted-foreground mb-2">
-                Données récupérées depuis le repository{" "}
+                Le repository du plugin{" "}
                 <a
                   href="https://github.com/ServerOpenMC/PluginV2"
                   target="_blank"
@@ -762,11 +762,12 @@ export default function ChangelogPage() {
                 </a>
               </p>
               <p className="text-sm text-muted-foreground/70">
-                Mis à jour automatiquement • Développé avec Next.js et shadcn/ui
+                Mis à jour automatiquement via le dépôt Github
               </p>
             </CardContent>
           </Card>
         </motion.div>
+
       </div>
     </div>
   );
