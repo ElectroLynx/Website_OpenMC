@@ -1,4 +1,5 @@
 import Image from "next/image";
+import BackgroundAudio from "./backgroundaudio";
 
 async function getAllContributors() {
   const repos = ["PluginV2", "Plugin", "Website"];
@@ -22,12 +23,14 @@ async function getAllContributors() {
   return uniqueContributors;
 }
 
-export default async function SecretPage() {
+export default async function Dance() {
   const contributors = await getAllContributors();
 
   return (
     <main className="pt-28 pb-12 px-4 text-center min-h-screen bg-background text-foreground flex flex-col items-center justify-center overflow-hidden">
       <h1 className="text-3xl font-bold text-primary mb-8">Les contributeurs dansent (easter egg sympa xD) ! </h1>
+
+        <BackgroundAudio />
 
       <div className="flex flex-wrap justify-center gap-6 max-w-4xl">
         {contributors.map((user: any, index: number) => {
