@@ -307,8 +307,10 @@ export default function Footer() {
           <div className="border-t border-border pt-6 flex flex-col sm:flex-row justify-between items-center text-sm text-muted-foreground">
             <p className="flex items-center gap-1">
               &copy; 2026 OpenMC. Fait avec{" "}
-              <Heart className="w-4 h-4 text-red-500" fill="currentColor" /> par
-              la communauté.
+              <Link href="/dance" className="hover:text-foreground transition-colors">
+                <Heart className="w-4 h-4 text-red-500" fill="currentColor" />
+              </Link>
+              par la communauté.
             </p>
             <div className="flex space-x-4 mt-4 sm:mt-0">
               <Link

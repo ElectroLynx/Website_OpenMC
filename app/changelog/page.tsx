@@ -748,8 +748,8 @@ export default function ChangelogPage() {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="text-center mt-12 pb-8"
         >
-          <Card className="bg-card/30 border-border backdrop-blur-sm">
-            <CardContent className="pt-6">
+        <Card className="w-fit max-w-full mx-auto gap-0 p-0 bg-card/30 border-border backdrop-blur-sm">
+          <CardContent className="px-4 py-5 text-center">
               <p className="text-muted-foreground mb-2">
                 Le repository du plugin{" "}
                 <a
