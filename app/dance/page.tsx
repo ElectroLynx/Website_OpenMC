@@ -1,7 +1,14 @@
 import Image from "next/image";
 import BackgroundAudio from "./backgroundaudio";
 
-async function getAllContributors() {
+interface GitHubUser {
+  id: number;
+  login: string;
+  avatar_url: string;
+  html_url: string;
+}
+
+async function getAllContributors(): Promise<GitHubUser[]> {
   const repos = ["PluginV2", "Plugin", "Website"];
 
   const requests = repos.map(async (repo) => {
@@ -17,7 +24,7 @@ async function getAllContributors() {
   const allContributors = rawResults.flat();
 
   const uniqueContributors = Array.from(
-    new Map(allContributors.map((user) => [user.id, user])).values()
+    new Map(allContributors.map((user: GitHubUser) => [user.id, user])).values()
   );
 
   return uniqueContributors;
@@ -28,12 +35,14 @@ export default async function Dance() {
 
   return (
     <main className="pt-28 pb-12 px-4 text-center min-h-screen bg-background text-foreground flex flex-col items-center justify-center overflow-hidden">
-      <h1 className="text-3xl font-bold text-primary mb-8">Les contributeurs dansent (easter egg sympa xD) ! </h1>
+      <h1 className="text-3xl font-bold text-primary mb-8">
+        Les contributeurs dansent (easter egg sympa xD) !{" "}
+      </h1>
 
-        <BackgroundAudio />
+      <BackgroundAudio />
 
       <div className="flex flex-wrap justify-center gap-6 max-w-4xl">
-        {contributors.map((user: any, index: number) => {
+        {contributors.map((user: GitHubUser, index: number) => {
           const delay = `${(index % 5) * 0.15}s`;
 
           return (
