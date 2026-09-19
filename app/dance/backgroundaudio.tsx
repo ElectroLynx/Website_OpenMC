@@ -16,6 +16,6 @@ export default function BackgroundAudio() {
   }, []);
 
   return (
-    <audio ref={audioRef} src="/songs/jonasblakewood-dance-pop.mp3" loop autoPlay />
+    <audio ref={audioRef} src="songs/jonasblakewood-dance-pop.mp3" loop autoPlay />
   );
 }
