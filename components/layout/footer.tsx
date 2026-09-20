@@ -43,6 +43,8 @@ export default function Footer() {
   >([]);
   const [loading, setLoading] = useState(true);
 
+  const [year, setYear] = useState<number | string>('');
+
   useEffect(() => {
     const fetchWebsiteContributors = async () => {
       try {
@@ -111,6 +113,8 @@ export default function Footer() {
     };
 
     fetchWebsiteContributors();
+
+    setYear(new Date().getFullYear());
   }, []);
 
   return (
@@ -306,7 +310,7 @@ export default function Footer() {
 
           <div className="border-t border-border pt-6 flex flex-col sm:flex-row justify-between items-center text-sm text-muted-foreground">
             <p className="flex items-center gap-1">
-              &copy; 2026 OpenMC. Fait avec{" "}
+              &copy; {year} OpenMC. Fait avec{" "}
               <Link href="/dance" className="hover:text-foreground transition-colors">
                 <Heart className="w-4 h-4 text-red-500" fill="currentColor" />
               </Link>

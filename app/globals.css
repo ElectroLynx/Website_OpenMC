@@ -200,3 +200,10 @@
   will-change: transform; 
   backface-visibility: hidden;
 }
+
+.dance-stopping {
+  animation-duration: 1.2s;
+  animation-delay: 0s;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-out;
+}

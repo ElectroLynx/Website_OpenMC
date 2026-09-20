@@ -1,7 +1,9 @@
-import Image from "next/image";
-import BackgroundAudio from "./backgroundaudio";
+import DanceContent from "./dance-content";
 
-interface GitHubUser {
+export const dynamic = "force-static";
+export const revalidate = 1800;
+
+export interface GitHubUser {
   id: number;
   login: string;
   avatar_url: string;
@@ -14,7 +16,7 @@ async function getAllContributors(): Promise<GitHubUser[]> {
   const requests = repos.map(async (repo) => {
     const res = await fetch(
       `https://api.github.com/repos/ServerOpenMC/${repo}/contributors`,
-      { next: { revalidate: 3600 } }
+      { next: { revalidate: 1800 } }
     );
     if (!res.ok) return [];
     return res.json();
@@ -39,39 +41,7 @@ export default async function Dance() {
         Les contributeurs dansent (easter egg sympa xD) !{" "}
       </h1>
 
-      <BackgroundAudio />
-
-      <div className="flex flex-wrap justify-center gap-6 max-w-4xl">
-        {contributors.map((user: GitHubUser, index: number) => {
-          const delay = `${(index % 5) * 0.15}s`;
-
-          return (
-            <a
-              key={user.id}
-              href={user.html_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex flex-col items-center group cursor-pointer"
-            >
-              <div
-                className="relative w-20 h-20 animate-dance group-hover:scale-110 transition-transform"
-                style={{ animationDelay: delay }}
-              >
-                <Image
-                  src={user.avatar_url}
-                  alt={user.login}
-                  width={80}
-                  height={80}
-                  className="rounded-full border-4 border-primary object-cover"
-                />
-              </div>
-              <span className="text-xs mt-2 font-mono text-muted-foreground group-hover:text-primary transition-colors">
-                {user.login}
-              </span>
-            </a>
-          );
-        })}
-      </div>
+      <DanceContent contributors={contributors} />
     </main>
   );
 }
