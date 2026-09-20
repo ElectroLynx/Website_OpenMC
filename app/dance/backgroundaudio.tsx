@@ -14,7 +14,7 @@ export default function BackgroundAudio({
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.4);
 
-  const audioSrc = `/songs/jonasblakewood-dance-pop.mp3`;
+  const audioSrc = `./songs/jonasblakewood-dance-pop.mp3`;
 
   const setPlaying = (playing: boolean) => {
     setIsPlaying(playing);
