@@ -3,7 +3,14 @@
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import BackgroundAudio from "./backgroundaudio";
-import type { GitHubUser } from "./page";
+
+type GitHubUser = {
+  id: number;
+  login: string;
+  avatar_url: string;
+  html_url: string;
+};
+
 
 type DanceContentProps = {
   contributors: GitHubUser[];

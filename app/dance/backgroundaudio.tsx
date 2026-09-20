@@ -14,29 +14,51 @@ export default function BackgroundAudio({
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0.4);
 
-  const audioSrc = `songs/jonasblakewood-dance-pop.mp3`;
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+  const audioSrc = `${basePath}/songs/jonasblakewood-dance-pop.mp3`;
 
-  useEffect(() => {
+  const setPlaying = (playing: boolean) => {
+    setIsPlaying(playing);
+    onStateChange(playing);
+  };
+
+  const play = async () => {
+    try {
+      await audioRef.current?.play();
+      setPlaying(true);
+    } catch {}
+  }
+
+  const togglePlay = () => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    const playAudio = () => {
-      audio
-        .play()
-        .then(() => {
-          setIsPlaying(true);
-          onStateChange(true);
-          window.removeEventListener("pointerdown", handleInteraction);
-          window.removeEventListener("keydown", handleInteraction);
-        })
-        .catch(() => undefined);
-    };
+    if (audio.paused) {
+      play();
+    } else {
+      audio.pause();
+      setPlaying(false);
+    }
+  }
 
+  const toggleMute = () => {
+    setVolume(volume === 0 ? 0.4 : 0);
+  }
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+    }
+  }, [volume]);
+  
+  useEffect(() => {
     const handleInteraction = () => {
-      playAudio();
+      play();
+      window.removeEventListener("pointerdown", handleInteraction);
+      window.removeEventListener("keydown", handleInteraction);
     };
 
-    playAudio();
+    play();
 
     window.addEventListener("pointerdown", handleInteraction);
     window.addEventListener("keydown", handleInteraction);
@@ -45,37 +67,7 @@ export default function BackgroundAudio({
       window.removeEventListener("pointerdown", handleInteraction);
       window.removeEventListener("keydown", handleInteraction);
     };
-  }, [onStateChange]);
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = volume;
-    }
-  }, [volume]);
-
-  const togglePlay = () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    if (isPlaying) {
-      audio.pause();
-      setIsPlaying(false);
-      onStateChange(false);
-    } else {
-      audio.play().then(() => {
-        setIsPlaying(true);
-        onStateChange(true);
-      });
-    }
-  };
-
-  const handleVolumeChange = (newVolume: number) => {
-    const audio = audioRef.current;
-    setVolume(newVolume);
-    if (audio) {
-      audio.volume = newVolume;
-    }
-  };
+  }, []);
 
   return (
     <>
@@ -97,7 +89,7 @@ export default function BackgroundAudio({
 
         <div className="flex items-center gap-2">
           <button
-            onClick={() => handleVolumeChange(volume === 0 ? 0.4 : 0)}
+            onClick={toggleMute}
             className="hover:text-primary transition-colors focus:outline-none"
             title={volume === 0 ? "Activer le son" : "Coupure du son"}
             aria-label={volume === 0 ? "Activer le son" : "Coupure du son"}
@@ -107,11 +99,11 @@ export default function BackgroundAudio({
 
           <input
             type="range"
-            min="0"
-            max="1"
-            step="0.05"
+            min={0}
+            max={1}
+            step={0.05}
             value={volume}
-            onChange={(e) => handleVolumeChange(parseFloat(e.target.value))}
+            onChange={(e) => setVolume(parseFloat(e.target.value))}
             className="w-16 h-1 bg-muted rounded-lg appearance-none cursor-pointer accent-primary"
             title="Ajuster le volume"
           />
